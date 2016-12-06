@@ -7,9 +7,29 @@ This repository contains an [Akka Streams](http://doc.akka.io/docs/akka/2.4/scal
 Usage
 =====
 
-TBD: Publish artifacts to Maven Central
+Currently only Scala 2.11 artifacts are published.
 
-Run `sbt localInstall` to install the artifacts locally.
+SBT:
+
+```
+"com.qubit" % "akka-cloudpubsub_2.11" % "1.0.0"
+```
+
+Maven:
+
+```
+<dependency>
+    <groupId>com.qubit</groupId>
+    <artifactId>akka-cloudpubsub_2.11</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+From source:
+
+```
+sbt localInstall
+```
 
 
 Reading from Cloud Pub/Sub (Source)
@@ -101,6 +121,9 @@ val client = RetryingPubSubClient(PubSubGrpcClient(config))
 ```
 
 
+Development
+===========
+
 Running Tests
 --------------
 
@@ -120,4 +143,23 @@ Change directory to source root and
 eval $(gcloud beta emulators pubsub env-init --data-dir /tmp/pubsub)
 sbt test it:test
 ```
+
+
+Releasing to Sonatype OSSRH
+---------------------------
+
+Ensure that credentials and PGP settings are correctly configured as documented at http://www.scala-sbt.org/release/docs/Using-Sonatype.html
+
+```
+sbt release
+sbt releaseSonatype
+```
+
+
+Contributing
+============
+
+- Please make sure that the code is formatted using [scalafmt](https://olafurpg.github.io/scalafmt/) using the provided formatting configuration
+- Add tests to exercise the new additions/modifications
+- Create an issue on Github before submitting your pull request
 
