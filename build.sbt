@@ -3,13 +3,45 @@ lazy val akkaVersion = "2.4.14"
 lazy val commonSettings = Seq(
   organization := "com.qubit",
   name := "akka-cloudpubsub",
-  scalaVersion := "2.11.8",
-  publishMavenStyle := true
+  scalaVersion := "2.11.8"
+)
+
+lazy val publishSettings = Seq(
+  pomIncludeRepository := { _ => false },
+  publishMavenStyle := true,
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+  pomExtra := (
+    <url>https://github.com/QubitProducts/akka-cloudpubsub</url>
+      <licenses>
+        <license>
+          <name>Apache License, Version 2.0</name>
+          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+          <distribution>repo</distribution>
+        </license>
+      </licenses>
+      <scm>
+        <url>git@github.com:QubitProducts/akka-cloudpubsub.git</url>
+        <connection>scm:git:git@github.com:QubitProducts/akka-cloudpubsub.git</connection>
+      </scm>
+      <developers>
+        <developer>
+          <id>charithe</id>
+          <name>Charith Ellawala</name>
+        </developer>
+      </developers>),
+  releasePublishArtifactsAction := PgpKeys.publishSigned.value
 )
 
 lazy val root = (project in file("."))
   .configs(IntegrationTest)
   .settings(commonSettings: _*)
+    .settings(publishSettings: _*)
   .settings(Defaults.itSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
