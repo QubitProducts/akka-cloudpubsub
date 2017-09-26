@@ -60,7 +60,7 @@ val attributes = Attributes(List(
     PubSubStageBufferSizeAttribute(200),
     PubSubStageMaxRetriesAttribute(100),
     PubSubStageRetryJitterAttribute(1, 5)))
-Source.fromGraph(new PubSubSource(PubSubSubscription("foo-project", "foo-sub")), 30.seconds).withAttributes(attributes)
+Source.fromGraph(new PubSubSource(PubSubSubscription("foo-project", "foo-sub"), 30.seconds)).withAttributes(attributes)
 ```
 
 
